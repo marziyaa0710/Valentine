@@ -8,22 +8,27 @@
   body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(135deg, #ffd6e8, #ffeef4);
+    background: linear-gradient(135deg, #ffd1dc, #ff4f8b);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Brush Script MT', cursive;
     overflow: hidden;
   }
 
   .container {
     text-align: center;
-    color: #ff4f8b;
+    color: white;
   }
 
   h1 {
-    font-size: 2.3rem;
+    font-size: 2.5rem;
     margin-bottom: 25px;
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin: 8px 0;
   }
 
   .buttons {
@@ -33,12 +38,13 @@
   }
 
   button {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     padding: 12px 28px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
     position: absolute;
+    transition: all 0.2s ease;
   }
 
   #yes {
@@ -51,12 +57,14 @@
   #no {
     background: white;
     color: #ff4f8b;
+    left: 20%;
+    top: 70px;
   }
 
   .heart {
     position: fixed;
     bottom: -10px;
-    font-size: 18px;
+    font-size: 20px;
     animation: float 6s linear forwards;
   }
 
@@ -71,21 +79,13 @@
 
 <body>
 
-<!-- 🎵 MUSIC (plays after YES) -->
-<iframe id="music" width="0" height="0" allow="autoplay"></iframe>
-
 <!-- PAGE 1 -->
 <div class="container" id="page1">
   <h1>Will you be my Valentine? 💘</h1>
 
   <div class="buttons">
     <button id="yes" onclick="goSure()">YES 💗</button>
-    <button id="no"
-      onmouseover="moveNo()"
-      onclick="moveNo()"
-      ontouchstart="moveNo()">
-      NO 😒
-    </button>
+    <button id="no">NO 😒</button>
   </div>
 </div>
 
@@ -94,7 +94,7 @@
   <h1>Are you sure? 🥺💗</h1>
 
   <div class="buttons">
-    <button id="yes" onclick="finalYes()">YES 🙂</button>
+    <button id="yes" onclick="finalYes()">YES 🤭</button>
     <button id="yes" onclick="finalYes()">YESSS OFC 😌💖</button>
   </div>
 </div>
@@ -102,23 +102,40 @@
 <!-- PAGE 3 -->
 <div class="container" id="page2" style="display:none;">
   <h1>Yayyy 🥹💞</h1>
-  <p style="font-size:1.3rem;">Happy Valentine, my favorite person 💕</p>
-  <p style="font-size:1.1rem;">I’m really glad it’s you 🌷</p>
+  <p>Happy Valentine, my favorite person 💕</p>
+  <p>I’m really glad it’s you 🌷</p>
 </div>
 
 <script>
-  function moveNo() {
-    const noBtn = document.getElementById("no");
+  // NO button movement logic
+  const noBtn = document.getElementById("no");
 
+  function moveNo() {
     const maxX = window.innerWidth - noBtn.offsetWidth - 20;
     const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-
     const x = Math.random() * maxX;
     const y = Math.random() * maxY;
-
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
   }
+
+  // Move NO continuously when mouse or touch is near
+  document.addEventListener('mousemove', (e) => {
+    const rect = noBtn.getBoundingClientRect();
+    const distanceX = e.clientX - (rect.left + rect.width/2);
+    const distanceY = e.clientY - (rect.top + rect.height/2);
+    const distance = Math.sqrt(distanceX*distanceX + distanceY*distanceY);
+    if(distance < 100) moveNo();
+  });
+
+  document.addEventListener('touchmove', (e) => {
+    const touch = e.touches[0];
+    const rect = noBtn.getBoundingClientRect();
+    const distanceX = touch.clientX - (rect.left + rect.width/2);
+    const distanceY = touch.clientY - (rect.top + rect.height/2);
+    const distance = Math.sqrt(distanceX*distanceX + distanceY*distanceY);
+    if(distance < 100) moveNo();
+  });
 
   function goSure() {
     document.getElementById("page1").style.display = "none";
@@ -128,13 +145,7 @@
   function finalYes() {
     document.getElementById("pageSure").style.display = "none";
     document.getElementById("page2").style.display = "block";
-    startMusic();
     hearts();
-  }
-
-  function startMusic() {
-    const music = document.getElementById("music");
-    music.src = "https://www.youtube.com/embed/GxldQ9eX2wo?autoplay=1&loop=1";
   }
 
   function hearts() {
@@ -147,6 +158,9 @@
       document.body.appendChild(h);
     }
   }
+
+  // Initialize NO button at random position
+  moveNo();
 </script>
 
 </body>
