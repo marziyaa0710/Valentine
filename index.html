@@ -67,9 +67,13 @@
   </style>
 </head>
 <body>
+  <iframe id="music" width="0" height="0"
+src="https://www.youtube.com/embed/KS8Pj4v2VfY?autoplay=1&loop=1"
+allow="autoplay">
+</iframe>
 
 <div class="container" id="page1">
-  <h1>Will you be my Valentine? 💘</h1>
+  <h1>Will you be my Valentine?💘</h1>
 
   <div class="buttons">
     <button id="yes" onclick="showLove()">YES 💖</button>
@@ -82,13 +86,21 @@
   </div>
 </div>
 
+  <div class="container" id="pageSure" style="display:none;">
+  <h1>Are you sure? 🥺💗</h1>
+
+  <div class="buttons">
+    <button id="yes" onclick="finalYes()">YES🙂</button>
+    <button id="no" onclick="finalYes()">YESSS OFC😌💖</button>
+  </div>
+</div>
 <div class="container" id="page2" style="display:none;">
   <h1>Yayyy 🥹💗</h1>
   <p style="font-size:1.3rem; margin-top:10px;">
-    Happy Valentine, my favorite person 💕
+    Happy Valentine, My Love!💕
   </p>
   <p style="font-size:1.1rem; margin-top:8px;">
-    I’m really glad it’s you 🌷
+    I’m really glad it’s you🌷
   </p>
 </div>
 <script>
@@ -100,12 +112,21 @@
     noBtn.style.top = y + "px";
   }
 
-  function showLove() {
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "block";
-    createHearts();
-  }
+ function showLove() {
+  document.getElementById("page1").style.display = "none";
+  document.getElementById("pageSure").style.display = "block";
+}
 
+  function finalYes() {
+  document.getElementById("pageSure").style.display = "none";
+  document.getElementById("page2").style.display = "block";
+  playMusic();
+  createHearts();
+}
+  function playMusic() {
+  const music = document.getElementById("music");
+  music.src += "";
+}
   function createHearts() {
     for (let i = 0; i < 30; i++) {
       const heart = document.createElement("div");
