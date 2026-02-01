@@ -12,7 +12,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Brush Script MT', cursive;
+    font-family: 'Brush Script MT', cursive, 'Segeo UI', sans-serif;
     overflow: hidden;
   }
 
@@ -78,6 +78,11 @@
 </head>
 
 <body>
+  <!-- BACKGROUND MUSIC -->
+<iframe id="music" width="0" height="0"
+src="https://www.youtube.com/embed/GxldQ9eX2wo?autoplay=1&loop=1"
+allow="autoplay">
+</iframe>
 
 <!-- PAGE 1 -->
 <div class="container" id="page1">
@@ -94,8 +99,8 @@
   <h1>Are you sure? 🥺💗</h1>
 
   <div class="buttons">
-    <button id="yes" onclick="finalYes()">YES 🤭</button>
-    <button id="yes" onclick="finalYes()">YESSS OFC 😌💖</button>
+    <button id="yes" onclick="finalYes()">YES!!</button>
+    <button id="yesOfc" onclick="finalYes()">YESSS OFC 😌💖</button>
   </div>
 </div>
 
@@ -148,15 +153,20 @@
     hearts();
   }
 
-  function hearts() {
-    for (let i = 0; i < 15; i++) {
-      const h = document.createElement("div");
-      h.className = "heart";
-      h.innerHTML = "💗";
-      h.style.left = Math.random() * 100 + "vw";
-      h.style.animationDuration = (Math.random() * 3 + 4) + "s";
-      document.body.appendChild(h);
-    }
+ function hearts() {
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    // Randomly choose heart or balloon
+    h.innerHTML = Math.random() > 0.5 ? "💗" : "🎈";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = (Math.random() * 25 + 15) + "px"; // bigger variety
+    h.style.animationDuration = (Math.random() * 3 + 4) + "s";
+    document.body.appendChild(h);
+    // Remove after animation
+    setTimeout(() => h.remove(), 7000);
+  }, 300); // every 0.3 sec new heart/balloon
+}
   }
 
   // Initialize NO button at random position
