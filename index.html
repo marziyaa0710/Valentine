@@ -1,176 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Be My Valentine 💗</title>
-
-<style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #ffd1dc, #ff4f8b);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Brush Script MT', cursive, 'Segeo UI', sans-serif;
-    overflow: hidden;
-  }
-
-  .container {
-    text-align: center;
-    color: white;
-  }
-
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 25px;
-  }
-
-  p {
-    font-size: 1.2rem;
-    margin: 8px 0;
-  }
-
-  .buttons {
-    position: relative;
-    width: 100%;
-    height: 200px;
-  }
-
-  button {
-    font-size: 1.2rem;
-    padding: 12px 28px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    position: absolute;
-    transition: all 0.2s ease;
-  }
-
-  #yes {
-    background: #ff4f8b;
-    color: white;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  #no {
-    background: white;
-    color: #ff4f8b;
-    left: 20%;
-    top: 70px;
-  }
-
-  .heart {
-    position: fixed;
-    bottom: -10px;
-    font-size: 20px;
-    animation: float 6s linear forwards;
-  }
-
-  @keyframes float {
-    to {
-      transform: translateY(-110vh);
-      opacity: 0;
+  <meta charset="UTF-8">
+  <title>Be My Valentine 💖</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffd1dc, #ffe6eb);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', cursive;
+      overflow: hidden;
     }
-  }
-</style>
+
+    .container {
+      text-align: center;
+      color: white;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      position: relative;
+      height: 150px;
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      position: absolute;
+    }
+
+    #yes {
+      background: #ff2f6d;
+      color: white;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    #no {
+      background: white;
+      color: #ff2f6d;
+      left: 20%;
+      top: 70px;
+    }
+
+    .hearts {
+      position: fixed;
+      bottom: -20px;
+      font-size: 24px;
+      animation: float 6s infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+  </style>
 </head>
-
 <body>
-  <!-- BACKGROUND MUSIC -->
-<iframe id="music" width="0" height="0"
-src="https://www.youtube.com/embed/GxldQ9eX2wo?autoplay=1&loop=1"
-allow="autoplay">
-</iframe>
 
-<!-- PAGE 1 -->
 <div class="container" id="page1">
   <h1>Will you be my Valentine? 💘</h1>
 
   <div class="buttons">
-    <button id="yes" onclick="goSure()">YES 💗</button>
-    <button id="no">NO 😒</button>
+    <button id="yes" onclick="showLove()">YES 💖</button>
+  <button id="no" 
+  onmouseover="moveNo()" 
+  onclick="moveNo()" 
+  ontouchstart="moveNo()">
+  NO 😒
+</button>
   </div>
 </div>
 
-<!-- PAGE 2 -->
-<div class="container" id="pageSure" style="display:none;">
+  <div class="container" id="pageSure" style="display:none;">
   <h1>Are you sure? 🥺💗</h1>
 
   <div class="buttons">
-    <button id="yes" onclick="finalYes()">YES!!</button>
+    <button id="yesButton" onclick="finalYes()">YES 💖</button>
     <button id="yesOfc" onclick="finalYes()">YESSS OFC 😌💖</button>
   </div>
 </div>
-
-<!-- PAGE 3 -->
-<div class="container" id="page2" style="display:none;">
-  <h1>Yayyy 🥹💞</h1>
-  <p>Happy Valentine, my favorite person 💕</p>
-  <p>I’m really glad it’s you 🌷</p>
+  <div class="container" id="page2" style="display:none;">
+  <h1>Yayyy 🥹💗</h1>
+  <p style="font-size:1.3rem; margin-top:10px;">
+    Happy Valentine,my favorite person💕
+  </p>
+  <p style="font-size:3.1rem; margin-top:8px;">
+    YOU'RE STUCK WITH ME FOREVERRR🌷
+  </p>
 </div>
 
 <script>
-  // NO button movement logic
-  const noBtn = document.getElementById("no");
-
+  function finalYes() {
+  document.getElementById("pageSure").style.display = "none";
+  document.getElementById("page2").style.display = "block";
+  hearts(); // create floating hearts/balloons
+}
   function moveNo() {
-    const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-    const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
+    const noBtn = document.getElementById("no");
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 100);
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
   }
 
-  // Move NO continuously when mouse or touch is near
-  document.addEventListener('mousemove', (e) => {
-    const rect = noBtn.getBoundingClientRect();
-    const distanceX = e.clientX - (rect.left + rect.width/2);
-    const distanceY = e.clientY - (rect.top + rect.height/2);
-    const distance = Math.sqrt(distanceX*distanceX + distanceY*distanceY);
-    if(distance < 100) moveNo();
-  });
-
-  document.addEventListener('touchmove', (e) => {
-    const touch = e.touches[0];
-    const rect = noBtn.getBoundingClientRect();
-    const distanceX = touch.clientX - (rect.left + rect.width/2);
-    const distanceY = touch.clientY - (rect.top + rect.height/2);
-    const distance = Math.sqrt(distanceX*distanceX + distanceY*distanceY);
-    if(distance < 100) moveNo();
-  });
-
-  function goSure() {
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("pageSure").style.display = "block";
-  }
-
-  function finalYes() {
-    document.getElementById("pageSure").style.display = "none";
-    document.getElementById("page2").style.display = "block";
-    hearts();
-  }
-
- function hearts() {
-  setInterval(() => {
-    const h = document.createElement("div");
-    h.className = "heart";
-    // Randomly choose heart or balloon
-    h.innerHTML = Math.random() > 0.5 ? "💗" : "🎈";
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.fontSize = (Math.random() * 25 + 15) + "px"; // bigger variety
-    h.style.animationDuration = (Math.random() * 3 + 4) + "s";
-    document.body.appendChild(h);
-    // Remove after animation
-    setTimeout(() => h.remove(), 7000);
-  }, 300); // every 0.3 sec new heart/balloon
+ function showLove() {
+  document.getElementById("page1").style.display = "none";
+  document.getElementById("pageSure").style.display = "block";
 }
-  }
 
-  // Initialize NO button at random position
-  moveNo();
+  function createHearts() {
+    for (let i = 0; i < 30; i++) {
+      const heart = document.createElement("div");
+      heart.className = "hearts";
+      heart.innerHTML = Math.random() > 0.5 ? "❤️" : "🎈";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+      document.body.appendChild(heart);
+    }
+  }
 </script>
 
 </body>
