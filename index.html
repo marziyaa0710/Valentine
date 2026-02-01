@@ -7,11 +7,11 @@
     body {
       margin: 0;
       height: 100vh;
-      background: linear-gradient(135deg, #ff5f9e, #ff9a9e);
+      background: linear-gradient(135deg, #ffd1dc, #ffe6eb);
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: 'Comic Sans MS', cursive;
+      font-family: 'Segoe UI', san-serif;
       overflow: hidden;
     }
 
@@ -73,16 +73,24 @@
 
   <div class="buttons">
     <button id="yes" onclick="showLove()">YES 💖</button>
-    <button id="no" onmouseover="moveNo()">NO 😒</button>
+    <button id="no" 
+    onmouseover="moveNo()"
+    onclick😒="moveNo()"
+    ontouchstart="moveNo()">
+    NO😒
+    </button>
   </div>
 </div>
 
 <div class="container" id="page2" style="display:none;">
-  <h1>YAYYYYY!!! 😍🎉</h1>
-  <h1>Happy Valentine, my love 💖😘</h1>
-  <h2>💌 YOU ARE STUCK WITH ME NOW 💌</h2>
+  <h1>Yayyy 🥹💗</h1>
+  <p style="font-size:1.3rem; margin-top:10px;">
+    Happy Valentine, my favorite person 💕
+  </p>
+  <p style="font-size:1.1rem; margin-top:8px;">
+    I’m really glad it’s you 🌷
+  </p>
 </div>
-
 <script>
   function moveNo() {
     const noBtn = document.getElementById("no");
