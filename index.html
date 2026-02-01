@@ -14,22 +14,12 @@
       font-family: 'Brush Script MT', cursive;
       overflow: hidden;
     }
-
     .container {
       text-align: center;
       color: white;
     }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 30px;
-    }
-
-    .buttons {
-      position: relative;
-      height: 150px;
-    }
-
+    h1 { font-size: 2.5rem; margin-bottom: 30px; }
+    .buttons { position: relative; height: 150px; }
     button {
       font-size: 1.2rem;
       padding: 12px 30px;
@@ -39,79 +29,21 @@
       position: absolute;
     }
 
-    /* Page 1 buttons */
-    #yes {
-      background: #ff2f6d;
-      color: white;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+    /* PAGE 1 */
+    #yes { background:#ff2f6d; color:white; left:50%; transform:translateX(-50%); }
+    #no { background:white; color:#ff2f6d; left:20%; top:70px; }
 
-    #no {
-      background: white;
-      color: #ff2f6d;
-      left: 20%;
-      top: 70px;
-    }
+    /* PAGE 2 */
+    #yesButton { background:#ff2f6d; color:white; left:30%; top:50px; }
+    #yesOfc { background:#ff2f6d; color:white; left:60%; top:50px; }
 
-    /* Page 2 buttons */
-    #yesButton {
-      background: #ff2f6d;
-      color: white;
-      left: 30%;
-      top: 50px;
-      transform: translateX(0);
-      position: absolute;
-      padding: 12px 28px;
-      border-radius: 30px;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
+    /* Hearts */
+    .heart { position: fixed; bottom:-50px; font-size:24px; pointer-events:none; animation: floatUp linear infinite; }
+    @keyframes floatUp { 0% { transform: translateY(0); opacity:1; } 100% { transform: translateY(-100vh); opacity:0; } }
 
-    #yesOfc {
-      background: #ff2f6d;
-      color: white;
-      left: 60%;
-      top: 50px;
-      transform: translateX(0);
-      position: absolute;
-      padding: 12px 28px;
-      border-radius: 30px;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    /* Floating hearts */
-    .heart {
-      position: fixed;
-      bottom: -50px;
-      font-size: 24px;
-      pointer-events: none;
-      animation: floatUp linear infinite;
-    }
-
-    @keyframes floatUp {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-100vh); opacity: 0; }
-    }
-
-    /* Text bubble styling */
-    .bubble {
-      background: #ff7fa3;
-      color: white;
-      display: inline-block;
-      padding: 8px 15px;
-      border-radius: 12px;
-      font-family: 'Brush Script MT', cursive;
-    }
-
-    .bubble-large {
-      background: #ff2f6d;
-      padding: 10px 20px;
-      border-radius: 15px;
-      font-size: 3rem;
-    }
-
+    /* Bubbles */
+    .bubble { background:#ff7fa3; color:white; display:inline-block; padding:8px 15px; border-radius:12px; margin-top:10px; }
+    .bubble-large { background:#ff2f6d; padding:10px 20px; border-radius:15px; font-size:3rem; margin-bottom:20px; display:inline-block; }
   </style>
 </head>
 <body>
@@ -121,7 +53,7 @@
   <h1>Will you be my Valentine? 💘</h1>
   <div class="buttons">
     <button id="yes" onclick="showSure()">YES 💖</button>
-    <button id="no" onmouseover="moveNo()" ontouchstart="moveNo()">NO 😒</button>
+    <button id="no" onmouseover="moveNo()">NO 😒</button>
   </div>
 </div>
 
@@ -136,37 +68,34 @@
 
 <!-- FINAL PAGE -->
 <div class="container" id="page2" style="display:none;">
-  <h1 class="bubble bubble-large">Yaaayyyyy 🥹💗</h1>
-  <p class="bubble" style="font-size:2rem; margin-top:15px;">Happy Valentine, my favorite person 💕</p>
-  <p class="bubble" style="font-size:1.7rem; margin-top:10px;">YOU'RE STUCK WITH ME FOREVERRR 🌷</p>
+  <h1 class="bubble-large">Yaaayyyyy 🥹💗</h1>
+  <p class="bubble" style="font-size:2rem;">Happy Valentine, my favorite person 💕</p>
+  <p class="bubble" style="font-size:1.7rem;">YOU'RE STUCK WITH ME FOREVERRR 🌷</p>
 </div>
 
 <script>
-  // Show "Are you sure?" page
+  // PAGE TRANSITIONS
   function showSure() {
     document.getElementById("page1").style.display = "none";
     document.getElementById("pageSure").style.display = "block";
   }
 
-  // Show final page + start hearts
   function finalYes() {
     document.getElementById("pageSure").style.display = "none";
     document.getElementById("page2").style.display = "block";
-    hearts();
+    hearts(); // start hearts
   }
 
-  // Move NO button
+  // NO button moves
   function moveNo() {
     const noBtn = document.getElementById("no");
     const maxX = window.innerWidth - noBtn.offsetWidth - 20;
     const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
   }
 
-  // Floating hearts function
+  // HEARTS FUNCTION
   function hearts() {
     setInterval(() => {
       const h = document.createElement("div");
@@ -181,4 +110,5 @@
   }
 </script>
 
-</
+</body>
+</html>
