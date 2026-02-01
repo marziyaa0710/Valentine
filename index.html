@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Be My Valentine 💖</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff5f9e, #ff9a9e);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Comic Sans MS', cursive;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      color: white;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      position: relative;
+      height: 150px;
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      position: absolute;
+    }
+
+    #yes {
+      background: #ff2f6d;
+      color: white;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    #no {
+      background: white;
+      color: #ff2f6d;
+      left: 20%;
+      top: 70px;
+    }
+
+    .hearts {
+      position: fixed;
+      bottom: -20px;
+      font-size: 24px;
+      animation: float 6s infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="page1">
+  <h1>Will you be my Valentine? 💘</h1>
+
+  <div class="buttons">
+    <button id="yes" onclick="showLove()">YES 💖</button>
+    <button id="no" onmouseover="moveNo()">NO 😒</button>
+  </div>
+</div>
+
+<div class="container" id="page2" style="display:none;">
+  <h1>YAYYYYY!!! 😍🎉</h1>
+  <h1>Happy Valentine, my love 💖😘</h1>
+  <h2>💌 YOU ARE STUCK WITH ME NOW 💌</h2>
+</div>
+
+<script>
+  function moveNo() {
+    const noBtn = document.getElementById("no");
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 100);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  }
+
+  function showLove() {
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "block";
+    createHearts();
+  }
+
+  function createHearts() {
+    for (let i = 0; i < 30; i++) {
+      const heart = document.createElement("div");
+      heart.className = "hearts";
+      heart.innerHTML = Math.random() > 0.5 ? "❤️" : "🎈";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+      document.body.appendChild(heart);
+    }
+  }
+</script>
+
+</body>
+</html>
