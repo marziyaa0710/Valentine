@@ -31,39 +31,65 @@
     }
 
     button {
-      font-size: 1.2rem;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      position: absolute;
-    }
+  font-size: 1.2rem;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  position: absolute;
+}
 
-    #yes {
-      background: #ff2f6d;
-      color: white;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+#yes {
+  background: #ff2f6d;
+  color: white;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-    #no {
-      background: white;
-      color: #ff2f6d;
-      left: 20%;
-      top: 70px;
-    }
+#no {
+  background: white;
+  color: #ff2f6d;
+  left: 20%;
+  top: 70px;
+}
+    #yesButton {
+  background: #ff2f6d;
+  color: white;
+  left: 30%;  /* move a bit left */
+  top: 50px;
+  transform: translateX(0);
+  position: absolute;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
 
-    .hearts {
-      position: fixed;
-      bottom: -20px;
-      font-size: 24px;
-      animation: float 6s infinite;
-    }
+#yesOfc {
+  background: #ff2f6d;
+  color: white;
+  left: 60%; /* move a bit right */
+  top: 50px;
+  transform: translateX(0);
+  position: absolute;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
 
-    @keyframes float {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-100vh); opacity: 0; }
-    }
+   .heart {
+  position: fixed;
+  bottom: -50px;
+  font-size: 24px;
+  pointer-events: none;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100vh); opacity: 0; }
+}
   </style>
 </head>
 <body>
@@ -86,17 +112,19 @@
   <h1>Are you sure? 🥺💗</h1>
 
   <div class="buttons">
-    <button id="yesButton" onclick="finalYes()">YES 💖</button>
+    <button id="yesButton" onclick="finalYes()">YES💖</button>
     <button id="yesOfc" onclick="finalYes()">YESSS OFC 😌💖</button>
   </div>
 </div>
   <div class="container" id="page2" style="display:none;">
-  <h1>Yayyy 🥹💗</h1>
-  <p style="font-size:1.3rem; margin-top:10px;">
-    Happy Valentine,my favorite person💕
+  <h1 style="font-family: 'Brush Script MT', cursive; font-size:3rem; background:#ff2f6d; color:white; display:inline-block; padding:10px 20px; border-radius:15px;">
+    Yaaayyyyy 🥹💗
+  </h1>
+  <p style="font-size:2rem; font-family:'Brush Script MT', cursive; background:#ff7fa3; color:white; display:inline-block; padding:8px 15px; border-radius:12px; margin-top:15px;">
+    Happy Valentine, my favorite person 💕
   </p>
-  <p style="font-size:3.1rem; margin-top:8px;">
-    YOU'RE STUCK WITH ME FOREVERRR🌷
+  <p style="font-size:1.7rem; font-family:'Brush Script MT', cursive; background:#ff7fa3; color:white; display:inline-block; padding:6px 12px; border-radius:10px; margin-top:10px;">
+    YOU'RE STUCK WITH ME FOREVERRR 🌷
   </p>
 </div>
 
@@ -118,16 +146,51 @@
   document.getElementById("page1").style.display = "none";
   document.getElementById("pageSure").style.display = "block";
 }
+  function moveNo() {
+  const noBtn = document.getElementById("no");
+  const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+  const maxY = window.innerHeight - noBtn.offsetHeight - 20;
 
-  function createHearts() {
-    for (let i = 0; i < 30; i++) {
-      const heart = document.createElement("div");
-      heart.className = "hearts";
-      heart.innerHTML = Math.random() > 0.5 ? "❤️" : "🎈";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-      document.body.appendChild(heart);
-    }
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
+
+// Move NO whenever mouse comes near
+document.addEventListener('mousemove', (e) => {
+  const noBtn = document.getElementById("no");
+  const rect = noBtn.getBoundingClientRect();
+  const distanceX = e.clientX - (rect.left + rect.width / 2);
+  const distanceY = e.clientY - (rect.top + rect.height / 2);
+  const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+  if(distance < 120) moveNo();
+});
+
+// For touch devices
+document.addEventListener('touchmove', (e) => {
+  const touch = e.touches[0];
+  const noBtn = document.getElementById("no");
+  const rect = noBtn.getBoundingClientRect();
+  const distanceX = touch.clientX - (rect.left + rect.width / 2);
+  const distanceY = touch.clientY - (rect.top + rect.height / 2);
+  const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+  if(distance < 120) moveNo();
+});
+
+ function hearts() {
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = Math.random() > 0.5 ? "❤️" : "🎈"; // heart or balloon
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = (Math.random() * 25 + 15) + "px";
+    h.style.animationDuration = (Math.random() * 3 + 4) + "s";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 7000);
+  }, 300); // every 0.3 sec
+}
   }
 </script>
 
